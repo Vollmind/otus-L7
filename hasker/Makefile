@@ -12,3 +12,4 @@ prod:
 	apt-get -y install -f pipenv
 	cd .. && pipenv install --system && python manage.py makemigrations && \
 	python manage.py migrate && setsid python manage.py runserver 0.0.0.0:80 > ./log.log 2>&1 < /dev/null &
+	
