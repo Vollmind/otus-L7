@@ -1,0 +1,62 @@
+{% extends "hasker_app/main.html" %}
+
+{% block title %} Quesion list {% endblock %}
+{% block content %}
+    <table>
+        <tr>
+            <td colspan="4">
+                {% if header_type == 'date' %}
+                    <span class="header">New questions | </span>
+                    <button onclick="document.location='{% url 'question_list' %}'" class="invisible nowidth">
+                        <span class="header gray">Top questions</span>
+                    </button>
+                {% elif header_type == 'rate' %}
+                    <button onclick="document.location='{% url 'question_list_date_ordered' %}'"
+                            class="invisible nowidth">
+                        <span class="header gray">New questions</span>
+                    </button>
+                    <span class="header"> | Top questions</span>
+                {% elif header_type == 'sorted' %}
+                    <span class="header">Search results</span>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td height="10px"></td>
+        </tr>
+        {% for question in object_list %}
+            <tr class="bottom_border">
+                <td width="100">
+                    <p>{{ question.rate }}</p>
+                    <p>rating</p>
+                </td>
+                <td width="100">
+                    <p>{{ question.answers.count }}</p>
+                    <p>answers</p>
+                </td>
+                <td width="780">
+                    <a href="{% url 'question_detail' question.id %}" class="question">{{ question.label }}</a>
+                    <br/>
+                    {% for tag in question.tags.all %}
+                        <button class="invisible nowidth tag"
+                                onclick="document.location='{% url 'question_search' %}?search_tag={{ tag.name }}'">
+                            {{ tag.name }}
+                        </button>
+                    {% endfor %}
+                </td>
+                <td width="100">
+                    <p class="user">{{ question.user.user.username }}</p>
+                    <p>asked {{ question.created_date }}</p>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="4">
+                <div style="float: right">
+                    {% include 'hasker_app/pagination.html' %}
+                </div>
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}

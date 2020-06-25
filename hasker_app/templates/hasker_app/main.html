@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Title {% endblock%}</title>
+</head>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'hasker_app/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'hasker_app/tagator/fm.tagator.jquery.css' %}">
+<script type="text/javascript" src="{% static 'hasker_app/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'hasker_app/tagator/fm.tagator.jquery.js' %}"></script>
+
+<body>
+    <table width="1280">
+        <tr height="100" class="bottom_border">
+            <td colspan="2" >
+                {% include "hasker_app/top_panel.html" %}
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">{% block content %} Top {% endblock%}</td>
+            <td style="width: 200px; vertical-align: top; border-left: 1px lightgray solid">{% include "hasker_app/side_panel.html" %}</td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+{% extends "hasker_app/main.html" %}
+
+{% block title %} {{question.label}} {% endblock%}
+{% block content %}
+
+{% load extra_tags %}
+
+<table width="100%">
+    <colgroup>
+        <col style="width:1px">
+        <col style="width:1px">
+        <col style="width:100%">
+    </colgroup>
+    <tr>
+        <td colspan="3"><h2>{{question.label}}</h2></td>
+    </tr>
+    <tr class="bottom_border">
+        <td>
+            {% vote question user %}
+        </td>
+        <td colspan="2">
+            <p class="comment">{{ question.text }}</p>
+            {% for tag in question.tags.all %}
+                <button class="invisible nowidth tag"
+                        onclick="document.location='{% url 'question_search' %}?search_tag={{ tag.name }}'">
+                    {{ tag.name }}
+                </button>
+            {% endfor %}
+            <div style="float: right; margin: 5px">
+                <img class="avatar" src="{{ question.user.avatar.url }}">
+                <span class="user">{{ question.user.user.username }}</span>
+            </div>
+        </td>
+    </tr>
+    {% for answer in object_list %}
+    <tr class="bottom_border">
+        <td></td>
+        <td>
+            {% vote answer user %}
+            {% if answer.confirmed %}
+                <svg width="34" height="34" viewBox="0 0 34 34">
+                    <path class="green" d="M 6 17 L 14 28 L 28 6"></path>
+                </svg>
+            {% endif %}
+        </td>
+        <td>
+            <p class="comment">{{ answer.text }}</p>
+            <div style="float: right; margin: 5px">
+                <img class="avatar" src="{{ answer.user.avatar.url }}">
+                <span class="user">{{ answer.user.user.username }}</span>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        <tr>
+            <td colspan="3">
+                <h3>Your answer:</h3>
+                <form action="{% url 'post_answer' question.id %}" method="post">
+                    {% csrf_token %}
+                    <textarea name="text" placeholder="..." rows="4" style="width: 100%"></textarea>
+                    <button style="float: right; margin: 3px" type="submit">Submit</button>
+                </form>
+            </td>
+        </tr>
+    {% endif %}
+</table>
+
+
+
+{% endblock%}

@@ -1,0 +1,41 @@
+{% if user.is_authenticated %}
+    {% if current <= 0 %}
+    <form action="{% url 'vote_up' type object.id %}">
+        <button type="submit" class="invisible">
+            <svg width="34" height="34" viewBox="0 0 34 34">
+                <path d="M 2 24 L 17 10 L 32 24"></path>
+            </svg>
+        </button>
+    </form>
+    {% else %}
+        <svg width="34" height="34" viewBox="0 0 34 34">
+            <path class="selected" d="M 2 24 L 17 10 L 32 24"></path>
+        </svg>
+    {% endif %}
+{% else %}
+    <svg width="34" height="34" viewBox="0 0 34 34">
+        <path d="M 2 24 L 17 10 L 32 24"></path>
+    </svg>
+{% endif %}
+
+<p class="shrink">{{rate}}</p>
+
+{% if user.is_authenticated %}
+    {% if current >= 0 %}
+    <form action="{% url 'vote_down' type object.id %}">
+        <button type="submit" class="invisible">
+            <svg width="34" height="34" viewBox="0 0 34 34">
+                <path d="M 2 10 L 17 24 L 32 10"></path>
+            </svg>
+        </button>
+    </form>
+    {% else %}
+        <svg width="34" height="34" viewBox="0 0 34 34">
+            <path class="selected" d="M 2 10 L 17 24 L 32 10"></path>
+        </svg>
+    {% endif %}
+{% else %}
+    <svg width="34" height="34" viewBox="0 0 34 34">
+        <path d="M 2 10 L 17 24 L 32 10"></path>
+    </svg>
+{% endif %}

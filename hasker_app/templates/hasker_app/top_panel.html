@@ -1,0 +1,43 @@
+<button class="invisible nowidth" onclick="document.location='{% url 'question_list' %}'">
+    <p class="top">HASKER</p>
+</button>
+
+<div style="display: inline-block;">
+    <input id="search_text" type="text" placeholder="search...">
+    <button onclick="
+            search_str = $('#search_text')[0].value
+            if (search_str.startsWith('tag:')) {
+                document.location='{% url 'question_search' %}?search_tag=' + search_str.substring(4)
+            } else {
+                document.location='{% url 'question_search' %}?search_str=' + search_str
+            }">
+        Search
+    </button>
+</div>
+{% if user.is_authenticated %}
+    <table style="float: right; margin: 5px">
+        <tr>
+            <td rowspan="2">
+                <img class="big_avatar" src="{{ user.user_req.avatar.url }}">
+            </td>
+            <td>
+                <button class="invisible nowidth"
+                        style="margin: 0"
+                        onclick="document.location='{% url 'edit_account' %}'">
+                    <span class="user">{{ user.username }}</span>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a class="user" href="{% url 'logout' %}">logout</a>
+            </td>
+        </tr>
+    </table>
+{% else %}
+    <div style="float: right; margin: 5px">
+        <button onclick="document.location='{% url "login" %}'" class="login">Log in</button>
+        <br/>
+        <button onclick="document.location='{% url 'register' %}'">Sign up</button>
+    </div>
+{% endif %}

@@ -1,0 +1,23 @@
+<table>
+    {% if user.is_authenticated %}
+        <tr>
+            <td colspan="2">
+                <button style="text-align: center" onclick="document.location='{% url 'ask_question' %}'">Ask question</button>
+            </td>
+        </tr>
+    {% endif %}
+    {% for question in side_questions %}
+        <tr>
+            <td style="vertical-align: top">
+                <div style="margin: 6px">
+                    <span class="tag">{{ question.rate }}</span>
+                </div>
+            </td>
+            <td>
+                <button class="invisible nowidth" onclick="document.location='{% url 'question_detail' question.id %}'">
+                    <span>{{ question.label }}</span>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
