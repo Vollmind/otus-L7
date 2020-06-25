@@ -1,6 +1,6 @@
 prod:
 	apt-get update
-	apt-get install -f python3-pip python3-dev libpq-dev postgresql postgresql-contrib
+	apt-get -y install -f python3-pip python3-dev libpq-dev postgresql postgresql-contrib
 	pg_ctlcluster 11 main start
 	su - postgres -c psql
 	CREATE DATABASE lesson7;
@@ -11,7 +11,7 @@ prod:
 	ALTER USER lesson7user CREATEDB;
 	GRANT ALL PRIVILEGES ON DATABASE lesson7 TO lesson7user;
 	\q
-	apt-get install -f pipenv
+	apt-get -y install -f pipenv
 	cd ..
 	pipenv install
 	pipenv shell
