@@ -11,8 +11,7 @@ prod:
 	su - postgres -c "psql -c \"GRANT ALL PRIVILEGES ON DATABASE lesson7 TO lesson7user\""
 	apt-get -y install -f pipenv
 	cd ..
-	pipenv install
-	pipenv shell
+	pipenv install --system
 	python manage.py makemigrations
 	python manage.py migrate
-	python manager.py runserver 0.0.0.0:80
+	setsid python manager.py runserver 0.0.0.0:80 > ./log.log 2>&1 < /dev/null &
